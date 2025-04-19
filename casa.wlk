@@ -7,12 +7,22 @@ object casaDePepeYJulian {
 	var property gastadoEnCompras = 0
 	var property cuentaAsignada = cuentaCorriente
 
-	method comprar(cosa) {
-		cosasCompradas.add(cosa)
-		gastadoEnCompras += cosa.precio()
-		cuentaAsignada.extraer(cosa.precio())
+	method gastos(){
+		return gastadoEnCompras + self.preciosCompras() 
+		// ¿podría haber puesto directamante, gastadoEnCompras + cosasCompradas.sum({cosa => cosa.precio(self)})?
 
 	}
+
+	method preciosCompras() {
+		return cosasCompradas.sum({cosa => cosa.precio(self)})
+	}
+
+
+	method comprar(cosa) {
+		cuentaAsignada.extraer(cosa.precio())
+		cosasCompradas.add(cosa)
+	}
+
 	method cantidadDeCosasCompradas() {
 		return cosasCompradas.size()
 	}
@@ -23,7 +33,7 @@ object casaDePepeYJulian {
 	}
 
 	method vieneDeComprar(categoria) {
-		return ((cosasCompradas.last().categoria()) == categoria)
+		return cosasCompradas.last().categoria() == categoria
 
 	}
 
@@ -61,22 +71,14 @@ object casaDePepeYJulian {
 	}
 
 	method categoriasCompradas() {
-		return cosasCompradas.map({ cosa => cosa.categoria() }).distinct()
+		return cosasCompradas.map({ cosa => cosa.categoria() }).asSet()
 
 	}
 
 }
 
 object cuentaCorriente {
-	var saldo = 0 //duda aca de si usar var property. por las dudas, dejo var
-
-	method saldo() {
-		return saldo
-	}
-
-	method saldo(_saldo) {
-		saldo = _saldo
-	}
+	var property saldo = 0 
 
 	method depositar(monto) {
 		saldo += monto
@@ -97,25 +99,9 @@ object cuentaCorriente {
 }
 
 object cuentaConGastos {
-	var saldo= 0 //duda de si usar var property aca esta ok. por el metodo de depositar
+	var property saldo= 0 
 	
-	var costoPorOperacion = 0
-
-	method saldo() {
-		return saldo
-	}
-
-	method saldo(_saldo) {
-		saldo = _saldo
-	}
-
-	method costoPorOperacion(){
-		return costoPorOperacion
-	}
-
-	method costoPorOperacion(_costo) {
-		costoPorOperacion = _costo
-	}
+	var property costoPorOperacion = 0
 
 	method depositar(monto) {
 		self.validarDepositar(monto)
