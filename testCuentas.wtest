@@ -1,0 +1,43 @@
+
+import cosas.*
+
+import casa.*
+
+describe "tests cuenta bancaria" {
+
+    test "test numero 1" {
+        cuentaCorriente.saldo(20)
+	    cuentaCorriente.depositar(1000)
+	    assert.equals(1020, cuentaCorriente.saldo())
+	    cuentaCorriente.extraer(50)
+	    assert.equals(970, cuentaCorriente.saldo())
+        assert.throwsException({cuentaCorriente.extraer(2000)})
+    }
+
+    test "numero 2" {
+        cuentaConGastos.saldo(500)
+	    cuentaConGastos.costoPorOperacion(20)
+	    cuentaConGastos.depositar(1000)
+	    assert.equals(1480, cuentaConGastos.saldo())
+
+	    cuentaConGastos.extraer(30)
+	    assert.equals(1450, cuentaConGastos.saldo())
+
+	    assert.throwsException({cuentaConGastos.depositar(2000)})
+	    assert.equals(1450, cuentaConGastos.saldo()) 
+
+	    cuentaConGastos.extraer(2000)
+	    assert.equals(-550, cuentaConGastos.saldo())
+    }
+
+    test "test numero 3"{
+        cuentaCorriente.saldo(1000)
+	    casaDePepeYJulian.cuentaAsignada(cuentaCorriente)
+
+	    casaDePepeYJulian.comprar(tiraDeAsado)
+	    casaDePepeYJulian.comprar(paqueteDeFideos)
+
+	    assert.equals(600, cuentaCorriente.saldo())}
+
+
+}

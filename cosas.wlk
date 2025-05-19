@@ -1,12 +1,15 @@
+import casa.*
 object electrodomestico{
-}
 
-object mueble {
 }
 
 object comida {
 
 }
+
+object mueble {
+}
+
 
 object heladera {
 	method precio() { return 20000 }
