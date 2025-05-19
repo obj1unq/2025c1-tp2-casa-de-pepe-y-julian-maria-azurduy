@@ -8,8 +8,8 @@ object casaDePepeYJulian {
 	var property cuentaAsignada = cuentaCorriente
 
 	method gastos(){
-		return gastadoEnCompras + self.preciosCompras() 
-		// ¿podría haber puesto directamante, gastadoEnCompras + cosasCompradas.sum({cosa => cosa.precio(self)})?
+		return self.preciosCompras() 
+		
 
 	}
 
